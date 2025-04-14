@@ -730,6 +730,18 @@ void ship_movement(Character& ship, RenderWindow& window) {
 }
 
 /****************************************************************
+* Function: checkCollision()                                    *
+* Description: Checks if two sprites intersect                  *
+* Input parameters: const Sprite&, const Sprite&                *
+* Returns: bool                                                 *
+* Preconditions:Two valid sprites                               *
+* Postconditions: Returns true if sprites intersect             *
+*****************************************************************/
+bool checkCollision(const Sprite& s1, const Sprite& s2){
+    return s1.getGlobalBounds().intersects(s2.getGlobalBounds());
+}
+
+/****************************************************************
 * Function: missile_movement()                                  *
 * Date Created: 4/17/2021                                       *
 * Date Last Modified: 4/17/2021                                 *
