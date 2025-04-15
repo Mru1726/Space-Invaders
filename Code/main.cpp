@@ -13,6 +13,7 @@
 #include "Missile.hpp"
 #include "Menu.hpp"
 
+bool checkCollision(const sf::Sprite& s1, const sf::Sprite& s2);
 void delay(int x);
 void ship_movement(Character& ship, RenderWindow& window);
 void missile_movement(vector<Missile*>& missiles, vector<Missile*>& enemyM);
@@ -287,7 +288,7 @@ int main() {
                 for (int j = 0; j < 5; j++) {
                     for (int k = 0; k < missiles.size(); k++) {
                         //If user missile hits a live enemy with lots of offset and hitboxing
-                        if (!missile.empty() && (dynamic_cast <Enemy*> (enemies[i][j]))->isAlive() && checkCollision(*missiles.at(k), *enemies[i][j])) {
+                        if (!missiles.empty() && (dynamic_cast <Enemy*> (enemies[i][j]))->isAlive() && checkCollision(*missiles.at(k), *enemies[i][j])) {
                             missiles.erase(missiles.begin() + k); //Deletes that particular missile
                             (dynamic_cast <Enemy*> (enemies[i][j]))->kill();
                             invader_killed.play();
