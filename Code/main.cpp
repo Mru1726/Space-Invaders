@@ -30,7 +30,10 @@ int main() {
     Clock c, c2, c3;
     sf::ContextSettings settings;
     settings.antialiasingLevel = 0; //Disables anti-aliasing (might fix GPU issues)
+    settings.attributeFlags = sf::ContextSettings::Core;
     sf::RenderWindow window(sf::VideoMode(950, 950), "Space Invaders", sf::Style::Default, settings); //Size of window
+
+    window.setFramerateLimit(60);
 
     sf::Texture texture, t1, t2, t3, t4, t5, t6, t7, t8; //Allows different textures for items
     if (!texture.loadFromFile("assets/Ship.png")) {
@@ -263,6 +266,11 @@ int main() {
             }
 
         window.clear();
+
+        sf::CircleShape testShape(50.f); //Check the texture issue
+        testShape.setFillColor(sf::Color::Green);
+        testShape.setPosition(100,100);
+        window.draw(testShape);
 
         //Draw statistics
         window.draw(scoreT);
