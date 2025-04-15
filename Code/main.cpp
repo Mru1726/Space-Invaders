@@ -280,8 +280,7 @@ int main() {
                 for (int j = 0; j < 5; j++) {
                     for (int k = 0; k < missiles.size(); k++) {
                         //If user missile hits a live enemy with lots of offset and hitboxing
-                        if (!missiles.empty() && (dynamic_cast <Enemy*> (enemies[i][j]))->isAlive() && missiles.at(k)->getPosition().y == enemies[i][j]->getPosition().y && missiles.at(k)->getPosition().x >
-                            enemies[i][j]->getPosition().x - 20 && missiles.at(k)->getPosition().x < enemies[i][j]->getPosition().x + 20) {
+                        if (!missile.empty() && (dynamic_cast <Enemy*> (enemies[i][j]))->isAlive() && checkCollision(*missiles.at(k), *enemies[i][j])) {
                             missiles.erase(missiles.begin() + k); //Deletes that particular missile
                             (dynamic_cast <Enemy*> (enemies[i][j]))->kill();
                             invader_killed.play();
@@ -301,7 +300,7 @@ int main() {
                 for (int i = 0; i < enemyM.size(); i++) {
 
                     //If enemy missile hits ship
-                    if (!enemyM.empty() && enemyM.at(i)->getPosition().y == ship->getPosition().y && enemyM.at(i)->getPosition().x > ship->getPosition().x - 20 && enemyM.at(i)->getPosition().x < ship->getPosition().x + 120) {
+                    if (!enemyM.empty() && checkCollision(*enemyM.at(i), *ship)) {
                         enemyM.erase(enemyM.begin() + i);
                         lives--;
                         ship_hit.play();
@@ -309,20 +308,17 @@ int main() {
 
                     //If enemy missile hits one of the shields
 
-                    if (!enemyM.empty() && enemyM.at(i)->getPosition().y > shieldS1.getPosition().y && enemyM.at(i)->getPosition().x > shieldS1.getPosition().x - 20 && enemyM.at(i)->getPosition().x < shieldS1.getPosition().x + 120 &&
-                        tChange1 <= 3) {
+                    if (!enemyM.empty() && checkCollision(*enemyM.at(i), shieldS1) && tChange1 <= 3) {
                         enemyM.erase(enemyM.begin() + i);
                         shieldS1.setTexture(shieldT1.at(tChange1));
                         tChange1++;
                     }
-                    if (!enemyM.empty() && enemyM.at(i)->getPosition().y > shieldS2.getPosition().y && enemyM.at(i)->getPosition().x > shieldS2.getPosition().x - 20 && enemyM.at(i)->getPosition().x < shieldS2.getPosition().x + 120 &&
-                        tChange2 <= 3) {
+                    if (!enemyM.empty() && checkCollision(*enemyM.at(i), shieldS2) && tChange2 <= 3) {
                         enemyM.erase(enemyM.begin() + i);
                         shieldS2.setTexture(shieldT2.at(tChange2));
                         tChange2++;
                     }
-                    if (!enemyM.empty() && enemyM.at(i)->getPosition().y > shieldS3.getPosition().y && enemyM.at(i)->getPosition().x > shieldS3.getPosition().x - 20 && enemyM.at(i)->getPosition().x < shieldS3.getPosition().x + 120 &&
-                        tChange3 <= 3) {
+                    if (!enemyM.empty() && checkCollision(*enemyM.at(i), shieldS3) && tChange3 <= 3) {
                         enemyM.erase(enemyM.begin() + i);
                         shieldS3.setTexture(shieldT3.at(tChange3));
                         tChange3++;
@@ -341,25 +337,22 @@ int main() {
         for (int i = 0; i < 10; i++) {
             for (int j = 0; j < 5; j++) {
                 //If enemies get to y = 900 pixels, the user automatically loses
-                if ((dynamic_cast <Enemy*> (enemies[i][j]))->isAlive() && (dynamic_cast <Enemy*> (enemies[i][j]))->getPosition().y + 50 == 900)
+                if ((dynamic_cast <Enemy*> (enemies[i][j]))->isAlive() && enemies[i][j]->getPosition().y + enemies[i][j]->getGlobalBounds().height >= 900)
                     lives = 0;
 
                 //If enemy hits a shield, they die and the shield takes some damage
 
-                if ((dynamic_cast <Enemy*> (enemies[i][j]))->isAlive() && (dynamic_cast <Enemy*> (enemies[i][j]))->getPosition().y == shieldS1.getPosition().y && (dynamic_cast <Enemy*> (enemies[i][j]))->getPosition().x >
-                    shieldS1.getPosition().x - 20 && (dynamic_cast <Enemy*> (enemies[i][j]))->getPosition().x < shieldS1.getPosition().x + 120 && tChange1 <= 3) {
+                if ((dynamic_cast <Enemy*> (enemies[i][j]))->isAlive() && checkCollision(*enemies[i][j], shieldS1) && tChange1 <= 3) {
                     (dynamic_cast <Enemy*> (enemies[i][j]))->kill();
                     shieldS1.setTexture(shieldT1.at(tChange1));
                     tChange1++;
                 }
-                if ((dynamic_cast <Enemy*> (enemies[i][j]))->isAlive() && (dynamic_cast <Enemy*> (enemies[i][j]))->getPosition().y == shieldS2.getPosition().y && (dynamic_cast <Enemy*> (enemies[i][j]))->getPosition().x >
-                    shieldS2.getPosition().x - 20 && (dynamic_cast <Enemy*> (enemies[i][j]))->getPosition().x < shieldS2.getPosition().x + 120 && tChange2 <= 3) {
+                if ((dynamic_cast <Enemy*> (enemies[i][j]))->isAlive() && checkCollision(*enemies[i][j], shieldS2) && tChange2 <= 3) {
                     (dynamic_cast <Enemy*> (enemies[i][j]))->kill();
                     shieldS2.setTexture(shieldT2.at(tChange2));
                     tChange2++;
                 }
-                if ((dynamic_cast <Enemy*> (enemies[i][j]))->isAlive() && (dynamic_cast <Enemy*> (enemies[i][j]))->getPosition().y == shieldS3.getPosition().y && (dynamic_cast <Enemy*> (enemies[i][j]))->getPosition().x >
-                    shieldS3.getPosition().x - 20 && (dynamic_cast <Enemy*> (enemies[i][j]))->getPosition().x < shieldS3.getPosition().x + 120 && tChange3 <= 3) {
+                if ((dynamic_cast <Enemy*> (enemies[i][j]))->isAlive() && checkCollision(*enemies[i][j], shieldS3) && tChange3 <= 3) {
                     (dynamic_cast <Enemy*> (enemies[i][j]))->kill();
                     shieldS3.setTexture(shieldT3.at(tChange3));
                     tChange3++;
@@ -727,6 +720,18 @@ void ship_movement(Character& ship, RenderWindow& window) {
 
     if (ship.getPosition().x != 0 && (Keyboard::isKeyPressed(Keyboard::Left) || Keyboard::isKeyPressed(Keyboard::A)))
         ship.move(-0.5, 0);
+}
+
+/****************************************************************
+* Function: checkCollision()                                    *
+* Description: Checks if two sprites intersect                  *
+* Input parameters: const Sprite&, const Sprite&                *
+* Returns: bool                                                 *
+* Preconditions:Two valid sprites                               *
+* Postconditions: Returns true if sprites intersect             *
+*****************************************************************/
+bool checkCollision(const Sprite& s1, const Sprite& s2){
+    return s1.getGlobalBounds().intersects(s2.getGlobalBounds());
 }
 
 /****************************************************************
