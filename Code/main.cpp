@@ -30,7 +30,10 @@ int main() {
 
     RenderWindow window(VideoMode(950, 950), "Space Invaders"); //Size of window
 
-    Texture t1, t2, t3, t4, t5, t6, t7, t8; //Allows different textures for items
+    sf::Texture t1, t2, t3, t4, t5, t6, t7, t8; //Allows different textures for items
+    if (!texture.loadFromFile("assets/ship.png")) {
+        std::cerr << "Failed to load ship.png!" << std::endl;
+    }
 
     //In-game music
     Music music;
@@ -61,8 +64,11 @@ int main() {
 
     //Sets up different text in the game
     Text scoreT, livesT, levelT, scoreEnd, levelEnd, endMessage, testCase;
-    Font font;
+    sf::Font font;
     font.loadFromFile("font.ttf");
+    if (!font.loadFromFile("fonts/arial.ttf")) {
+        std::cerr << "Failed to load font!" << std::endl;
+    }
 
     scoreT.setFont(font);
     livesT.setFont(font);
@@ -156,9 +162,9 @@ int main() {
     shieldS3.setScale(Vector2f(0.5f, 0.5f));
 
     while (window.isOpen()) {
-        Event event;
+        sf::Event event;
         while (window.pollEvent(event)) {
-            if (event.type == Event::Closed)
+            if (event.type == sf::Event::Closed)
                 window.close();
         }
 
