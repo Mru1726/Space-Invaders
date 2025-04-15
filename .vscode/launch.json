@@ -9,7 +9,7 @@
         "program": "${workspaceFolder}\\bin\\space_invaders.exe",
         "args": [],
         "stopAtEntry": false,
-        "cwd": "${workspaceFolder}",
+        "cwd": "${workspaceFolder}/bin",
         "environment": [],
         "externalConsole": true,
         "MIMode": "gdb",
