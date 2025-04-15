@@ -38,7 +38,7 @@ int main() {
 
     //In-game music
     Music music;
-    music.openFromFile("music.ogg");
+    music.openFromFile("assets/music.ogg");
     music.setLoop(true);
     music.play();
     music.setVolume(10.f);
@@ -47,9 +47,9 @@ int main() {
     SoundBuffer buffer;
     SoundBuffer buffer2;
     SoundBuffer buffer3;
-    buffer.loadFromFile("shoot.wav");
-    buffer2.loadFromFile("invaderkilled.wav");
-    buffer3.loadFromFile("explosion.wav");
+    buffer.loadFromFile("assets/shoot.wav");
+    buffer2.loadFromFile("assets/invaderkilled.wav");
+    buffer3.loadFromFile("assets/explosion.wav");
 
     Sound missile_sound;
     Sound invader_killed;
@@ -66,7 +66,7 @@ int main() {
     //Sets up different text in the game
     Text scoreT, livesT, levelT, scoreEnd, levelEnd, endMessage, testCase;
     sf::Font font;
-    font.loadFromFile("font.ttf");
+    font.loadFromFile("assets/font.ttf");
     if (!font.loadFromFile("fonts/arial.ttf")) {
         std::cerr << "Failed to load font!" << std::endl;
     }
