@@ -31,7 +31,7 @@ int main() {
     settings.antialiasingLevel = 0; //Disables anti-aliasing (might fix GPU issues)
     sf::RenderWindow window(sf::VideoMode(950, 950), "Space Invaders", sf::Style::Default, settings); //Size of window
 
-    sf::Texture t1, t2, t3, t4, t5, t6, t7, t8; //Allows different textures for items
+    sf::Texture texture, t1, t2, t3, t4, t5, t6, t7, t8; //Allows different textures for items
     if (!texture.loadFromFile("assets/ship.png")) {
         std::cerr << "Failed to load ship.png!" << std::endl;
     }
