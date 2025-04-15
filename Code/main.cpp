@@ -27,8 +27,9 @@ int main() {
     int level = 1, lives = 5, score = 0, tChange1 = 1, tChange2 = 1, tChange3 = 1;
 
     Clock c, c2, c3;
-
-    RenderWindow window(VideoMode(950, 950), "Space Invaders"); //Size of window
+    sf::ContextSettings settings;
+    settings.antialiasingLevel = 0; //Disables anti-aliasing (might fix GPU issues)
+    sf::RenderWindow window(sf::VideoMode(950, 950), "Space Invaders", sf::Style::Default, settings); //Size of window
 
     sf::Texture t1, t2, t3, t4, t5, t6, t7, t8; //Allows different textures for items
     if (!texture.loadFromFile("assets/ship.png")) {
