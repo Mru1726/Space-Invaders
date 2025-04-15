@@ -1,0 +1,32 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+      {
+        "label": "Build SFML Project",
+        "type": "shell",
+        "command": "g++",
+        "args": [
+          "main.cpp",
+          "Menu.cpp",
+          "Enemy.cpp",
+          "-o", "${workspaceFolder}\\bin\\space_invaders.exe",
+          "-I", "C:\\Users\\mruna\\Downloads\\SFML_libraries\\SFML-2.5.1\\include",
+          "-L", "C:\\Users\\mruna\\Downloads\\SFML_libraries\\SFML-2.5.1\\lib",
+          "-lsfml-graphics", 
+          "-lsfml-window", 
+          "-lsfml-system", 
+          "-lsfml-audio",
+          "-mwindows",
+          "-static",
+          "-static-libgcc",
+          "-static-libstdc++"
+        ],
+        "group": {
+          "kind": "build",
+          "isDefault": true
+        },
+        "problemMatcher": ["$gcc"],
+        "detail": "Compile SFML project with g++"
+      }
+    ]
+  }
