@@ -27,14 +27,18 @@ int main() {
     int level = 1, lives = 5, score = 0, tChange1 = 1, tChange2 = 1, tChange3 = 1;
 
     Clock c, c2, c3;
+    sf::ContextSettings settings;
+    settings.antialiasingLevel = 0; //Disables anti-aliasing (might fix GPU issues)
+    sf::RenderWindow window(sf::VideoMode(950, 950), "Space Invaders", sf::Style::Default, settings); //Size of window
 
-    RenderWindow window(VideoMode(950, 950), "Space Invaders"); //Size of window
-
-    Texture t1, t2, t3, t4, t5, t6, t7, t8; //Allows different textures for items
+    sf::Texture texture, t1, t2, t3, t4, t5, t6, t7, t8; //Allows different textures for items
+    if (!texture.loadFromFile("assets/Ship.png")) {
+        std::cerr << "Failed to load ship.png!" << std::endl;
+    }
 
     //In-game music
     Music music;
-    music.openFromFile("music.ogg");
+    music.openFromFile("assets/music.ogg");
     music.setLoop(true);
     music.play();
     music.setVolume(10.f);
@@ -43,9 +47,9 @@ int main() {
     SoundBuffer buffer;
     SoundBuffer buffer2;
     SoundBuffer buffer3;
-    buffer.loadFromFile("shoot.wav");
-    buffer2.loadFromFile("invaderkilled.wav");
-    buffer3.loadFromFile("explosion.wav");
+    buffer.loadFromFile("assets/shoot.wav");
+    buffer2.loadFromFile("assets/invaderkilled.wav");
+    buffer3.loadFromFile("assets/explosion.wav");
 
     Sound missile_sound;
     Sound invader_killed;
@@ -61,8 +65,11 @@ int main() {
 
     //Sets up different text in the game
     Text scoreT, livesT, levelT, scoreEnd, levelEnd, endMessage, testCase;
-    Font font;
-    font.loadFromFile("font.ttf");
+    sf::Font font;
+    font.loadFromFile("assets/font.ttf");
+    if (!font.loadFromFile("assets/fonts/arial.ttf")) {
+        std::cerr << "Failed to load font!" << std::endl;
+    }
 
     scoreT.setFont(font);
     livesT.setFont(font);
@@ -98,20 +105,20 @@ int main() {
 
     endMessage.setString("Press enter to continue...");
 
-    t1.loadFromFile("Ship.jpg"); //Loads image
+    t1.loadFromFile("assets/Ship.jpg"); //Loads image
     Character* ship = new User(Vector2f(425.f, 825.f), t1, Vector2f(0.1f, 0.1f)); //Polymorphism because uer is a character
 
     Character* enemies[10][5] = { nullptr }; //Allows for matrix of enemies
-    t2.loadFromFile("Alien.jpg");
+    t2.loadFromFile("assets/Alien.jpg");
 
     for (int i = 0; i < 10; i++)
         for (int j = 0; j < 5; j++)
             enemies[i][j] = new Enemy(Vector2f(175.f + 60 * i, 100.f + 50 * j), t2, Vector2f(0.75f, 0.75f));
 
-    t3.loadFromFile("Missile.jpg");
+    t3.loadFromFile("assets/Missile.jpg");
     vector<Missile*> missiles; //Keeps track of user missiles on the screen
 
-    t4.loadFromFile("enemyMissile.jpg");
+    t4.loadFromFile("assets/enemyMissile.jpg");
     vector<Missile*> enemyM; //Keeps track of enemy missiles on the screen
 
     //Helper variables for insertion into the vectors
@@ -123,10 +130,10 @@ int main() {
     vector<Texture> shieldT2;
     vector<Texture> shieldT3;
 
-    t5.loadFromFile("Shield1.jpg");
-    t6.loadFromFile("Shield2.jpg");
-    t7.loadFromFile("Shield3.jpg");
-    t8.loadFromFile("Shield4.jpg");
+    t5.loadFromFile("assets/Shield1.jpg");
+    t6.loadFromFile("assets/Shield2.jpg");
+    t7.loadFromFile("assets/Shield3.jpg");
+    t8.loadFromFile("assets/Shield4.jpg");
 
     //Inserts the cycle of textures
     shieldT1.push_back(t5);
@@ -156,9 +163,9 @@ int main() {
     shieldS3.setScale(Vector2f(0.5f, 0.5f));
 
     while (window.isOpen()) {
-        Event event;
+        sf::Event event;
         while (window.pollEvent(event)) {
-            if (event.type == Event::Closed)
+            if (event.type == sf::Event::Closed)
                 window.close();
         }
 
