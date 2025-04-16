@@ -50,7 +50,7 @@ The project follows a modular file structure, organizing game components into se
 while (window.isOpen()) {
     handleInput();
     update();
-    detectCollisions();
+    checkCollision();
     render();
 }
 ```
@@ -316,7 +316,7 @@ playerSprite.setTexture(playerTexture);
 
 ## 📄 Header File Conventions
 
-Even though each class has its own `.h` and `.cpp` file,  following typical SFML-based modular structure. Here’s what the includes generally look like: :
+Even though each class has its own `.h` and `.cpp` file, following typical SFML-based modular structure. Here’s what the includes generally look like: :
 
 | Header Element                   | Purpose                                                          |
 |----------------------------------|------------------------------------------------------------------|
@@ -380,9 +380,6 @@ Even though each class has its own `.h` and `.cpp` file,  following typical SFML
 | No scene manager             | Simplifies main loop                    | Can't switch between game states                |
 | Single-player only           | Focused logic, minimal complexity       | No support for multiplayer or AI behavior       |
 | One-direction bullet flow    | Avoids logic duplication                | No enemy bullets or special attacks             |
-
----
-## Demo Video
 
 ---
 
