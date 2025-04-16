@@ -159,9 +159,9 @@ This approach allows for:
  SFML uses `sf::FloatRect::intersects()` for collision detection, typically done using `getGlobalBounds()` from any `sf::Sprite` or `sf::Text`.
 cpp
 ```
-if (bullet.getBounds().intersects(enemy.getBounds())) {
-    // Bullet hit the enemy
-    bullet.setActive(false);
+if (missiles.getBounds().intersects(enemy.getBounds())) {
+    // Missile hit the enemy
+    missiles.setActive(false);
     enemy.destroy();
 }
 ```
@@ -215,7 +215,7 @@ The game uses C++ STL containers to manage dynamic lists of objects:
 
 ```cpp
 std::vector<Enemy> enemies;
-std::vector<Bullet> bullets;
+std::vector<Missile> missiles;
 ```
 - enemies: Stores all active enemy objects, updated and drawn every frame.
 - bullets: Stores bullets fired by the player. Each bullet is updated and drawn independently.
@@ -230,7 +230,7 @@ Benefits of std::vector:
 
 - Each entity (missile, enemy, ship) uses getGlobalBounds() to get its AABB for collision detection.
 ``` cpp
- if (missile.getBounds().intersects(enemy.getBounds())) {
+ if (missiles.getBounds().intersects(enemy.getBounds())) {
     // Collision response
  }
   ```
