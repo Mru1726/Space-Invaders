@@ -30,12 +30,13 @@
 
 The project follows a modular file structure, organizing game components into separate scripts for better maintainability and clarity:
 
-- `main.cpp`: Entry point of the game. Initializes everything.
-- `player.cpp / .h`: Manages the player spaceship class.
+- `main.cpp`: Core game loop. Manages game state.
+- `Character.cpp / .h` : Provides base functionality for all game characters.
+- `User.cpp / .h`: Implements player-specific behaviour.
 - `enemy.cpp / .h`: Handles alien logic and movement.
-- `missile.cpp / .h`: Bullet mechanics for player and enemy fire.
-- `game.cpp / .h`: Manages game loop, collision detection, score updates.
-- `Shield.cpp / .h` : Manages destructible shields.
+- `missile.cpp / .h`: Handles missile movement, lifespan and collision.
+- `Menu.cpp / .h`: Handles user menu selections.
+- `header.hpp` : Centralizes all SFML includes.
 
 
 ### Game Flow Overview
@@ -48,11 +49,15 @@ The project follows a modular file structure, organizing game components into se
 2. Main Game Loop
 ``` cpp
 while (window.isOpen()) {
-    handleInput();
-    update();
-    checkCollision();
-    render();
-}
+    // Event handling
+    sf::Event event;
+    while (window.pollEvent(event)) {
+        if (event.type == sf::Event::Closed)
+            window.close();
+    }
+
+    while (indicator && no_test)
+        m.displayMenu(&window, score, lives, indicator, no_test);
 ```
 a. Event Handling
 - Polls SFML events using ```window.pollEvent()```.
@@ -60,7 +65,7 @@ a. Event Handling
 
 b. State Updates
 - Player updates movement based on input flags.
-- All bullets move upwards each frame.
+- All missiles move upwards each frame.
 - Enemies move downwards and may respawn if destroyed or offscreen.
 - Game difficulty may scale based on score or enemy count.
 - Ensures enemies are removed or respawned, bullets are deleted.
@@ -105,7 +110,7 @@ The project is structured using **object-oriented principles**. Each core game e
 
 - **`Player`**: Handles movement, screen boundaries, shooting bullets, and drawing itself.
 - **`Enemy`**: Controls movement patterns, collision behavior, and respawning.
-- **`Bullet`**: Manages bullet direction, velocity, rendering, and off-screen cleanup.
+- **`Missile`**: Manages missile direction, velocity, rendering, and off-screen cleanup.
 
 Benefits of OOP in this context:
 - **Encapsulation**: Keeps functionality modular and isolated.
